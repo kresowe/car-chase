@@ -14,4 +14,3 @@ class Car(object):
 
     def position(self, t):
         return self.x0 + self.v0 * t + 0.5 * self.a * t**2
-
