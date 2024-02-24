@@ -81,6 +81,7 @@
                 </child>
                 <child>
                   <object class="ttk.Entry" id="entry5">
+                    <property name="textvariable">double:c1_v0</property>
                     <layout manager="grid">
                       <property name="column">1</property>
                       <property name="row">1</property>
@@ -98,6 +99,8 @@
                 </child>
                 <child>
                   <object class="ttk.Entry" id="entry8">
+                    <property name="text" translatable="yes">1.5	</property>
+                    <property name="textvariable">double:c1_a</property>
                     <layout manager="grid">
                       <property name="column">1</property>
                       <property name="row">2</property>
@@ -126,6 +129,7 @@
                 </child>
                 <child>
                   <object class="ttk.Entry" id="entry6">
+                    <property name="textvariable">double:c2_x0</property>
                     <layout manager="grid">
                       <property name="column">1</property>
                       <property name="row">0</property>
@@ -143,6 +147,8 @@
                 </child>
                 <child>
                   <object class="ttk.Entry" id="entry7">
+                    <property name="text" translatable="yes">11.11</property>
+                    <property name="textvariable">double:c2_v0</property>
                     <layout manager="grid">
                       <property name="column">1</property>
                       <property name="row">1</property>
@@ -160,6 +166,8 @@
                 </child>
                 <child>
                   <object class="ttk.Entry" id="entry9">
+                    <property name="text" translatable="yes">0.8</property>
+                    <property name="textvariable">double:c2_a</property>
                     <layout manager="grid">
                       <property name="column">1</property>
                       <property name="row">2</property>
@@ -173,6 +181,7 @@
         <child>
           <object class="ttk.Frame" id="frame6">
             <property name="height">200</property>
+            <property name="padding">5</property>
             <property name="width">200</property>
             <layout manager="grid">
               <property name="column">0</property>
@@ -200,6 +209,7 @@
                 </child>
                 <child>
                   <object class="ttk.Entry" id="entry10">
+                    <property name="textvariable">double:t_start</property>
                     <layout manager="grid">
                       <property name="column">1</property>
                       <property name="row">0</property>
@@ -219,7 +229,7 @@
                 <child>
                   <object class="ttk.Label" id="label13">
                     <property name="justify">center</property>
-                    <property name="text" translatable="yes">Initial time [s]</property>
+                    <property name="text" translatable="yes">Final time [s]</property>
                     <layout manager="grid">
                       <property name="column">0</property>
                       <property name="row">0</property>
@@ -228,6 +238,8 @@
                 </child>
                 <child>
                   <object class="ttk.Entry" id="entry11">
+                    <property name="text" translatable="yes">33.0</property>
+                    <property name="textvariable">double:t_end</property>
                     <layout manager="grid">
                       <property name="column">1</property>
                       <property name="row">0</property>
@@ -257,19 +269,10 @@
                 </layout>
               </object>
             </child>
-            <child>
-              <object class="ttk.Button" id="button2">
-                <property name="text" translatable="yes">Stop</property>
-                <layout manager="grid">
-                  <property name="column">1</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
           </object>
         </child>
         <child>
-          <object class="ttk.Frame" id="frame10">
+          <object class="ttk.Frame" id="frameplot" named="True">
             <property name="height">200</property>
             <property name="width">200</property>
             <layout manager="grid">
