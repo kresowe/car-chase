@@ -16,3 +16,6 @@ class Car(object):
         """Position at time t.
         Assume car is moving with uniformly accelerated motion (or constant speed)."""
         return self.x0 + self.v0 * t + 0.5 * self.a * t**2
+
+    def plot_dummy(self, ax):
+        return ax.plot([], [], color=self.get_marker_color(), marker=self.get_marker(), markersize=12)
