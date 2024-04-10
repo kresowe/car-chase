@@ -6,10 +6,12 @@ class Car(object):
         self._marker = marker
         self._marker_color = marker_color
 
-    def get_marker(self):
+    @property
+    def marker(self):
         return self._marker
 
-    def get_marker_color(self):
+    @property
+    def marker_color(self):
         return self._marker_color
 
     def position(self, t):
@@ -18,4 +20,4 @@ class Car(object):
         return self._x0 + self._v0 * t + 0.5 * self._a * t**2
 
     def plot_dummy(self, ax):
-        return ax.plot([], [], color=self.get_marker_color(), marker=self.get_marker(), markersize=12)
+        return ax.plot([], [], color=self._marker_color, marker=self._marker, markersize=12)

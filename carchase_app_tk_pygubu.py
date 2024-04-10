@@ -89,7 +89,7 @@ class CarChaseAppTkPyGubu:
             time_text.set_text(time_template.format(i * self._dt))
             return car1_pt, car2_pt,
 
-        self._ani = FuncAnimation(self._fig, animate, frames=len(t_s), interval=self._dt * 1000, repeat=False)
+        self._ani = FuncAnimation(self._fig, animate, frames=len(t_s), interval=self._dt, repeat=False)
         self._canvas.draw()
 
     def _read_values(self):

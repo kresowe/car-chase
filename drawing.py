@@ -29,7 +29,7 @@ def draw_road(low_y=0.4, high_y=0.6, ax=None):
 
 
 def draw_car(car: Car, t: float, y: float = 0.5):
-    plt.plot(car.position(t), y, color=car.get_marker_color(), marker=car.get_marker(), markersize=12)
+    plt.plot(car.position(t), y, color=car.marker_color, marker=car.marker, markersize=12)
 
 
 def find_x_range(car1_positions, car2_positions):
