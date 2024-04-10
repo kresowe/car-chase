@@ -3,8 +3,8 @@ class Car(object):
         self._x0 = x0  # initial position
         self._v0 = v0  # initial speed
         self._a = a  # constant acceleration
-        self._marker = marker
         self._marker_color = marker_color
+        self._marker = marker
 
     @property
     def marker(self):
