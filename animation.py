@@ -32,7 +32,6 @@ if __name__ == '__main__':
         time_text.set_text(time_template.format(i * dt))
         return car1_pt, car2_pt,
 
-    # ani = FuncAnimation(fig, animate, frames=len(t_s), interval=dt*1000)
     ani = FuncAnimation(fig, animate, frames=len(t_s), interval=dt)
 
     plt.show()

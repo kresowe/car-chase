@@ -107,8 +107,8 @@ class CarChaseAppTkPyGubu:
 
     def _read_value(self, field_name, input_name, mini, maxi):
         is_valid, text, res = validate_input(field_name,
-                                                    self.builder.get_variable(input_name).get(),
-                                                    mini, maxi)
+                                             self.builder.get_variable(input_name).get(),
+                                             mini, maxi)
         if not is_valid:
             self.is_valid_all = False
             self.err_message += text
