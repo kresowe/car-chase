@@ -17,97 +17,97 @@ proj_ui = proj_path / "carchase.ui"
 
 class CarChaseAppTkPyGubu:
     def __init__(self, master=None):
-        self.builder = pygubu.Builder()
-        self.builder.add_resource_path(proj_path)
-        self.builder.add_from_file(proj_ui)
-        self.mainwindow = self.builder.get_object('main_window', master)
+        self._builder = pygubu.Builder()
+        self._builder.add_resource_path(proj_path)
+        self._builder.add_from_file(proj_ui)
+        self._mainwindow = self._builder.get_object('main_window', master)
 
-        self.fig = Figure(figsize=(10, 3))
-        self.ax = self.fig.add_subplot(111)
-        self.canvas = FigureCanvasTkAgg(self.fig, master=self.builder.get_object('frameplot'))
-        self.canvas.draw()
-        self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+        self._fig = Figure(figsize=(10, 3))
+        self._ax = self._fig.add_subplot(111)
+        self._canvas = FigureCanvasTkAgg(self._fig, master=self._builder.get_object('frameplot'))
+        self._canvas.draw()
+        self._canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-        self.c1_x0 = 0.0
-        self.c1_v0 = 0.0
-        self.c1_a = 0.0
-        self.c2_x0 = 0.0
-        self.c2_v0 = 0.0
-        self.c2_a = 0.0
-        self.t_start = 0.0
-        self.t_end = 0.0
+        self._c1_x0 = 0.0
+        self._c1_v0 = 0.0
+        self._c1_a = 0.0
+        self._c2_x0 = 0.0
+        self._c2_v0 = 0.0
+        self._c2_a = 0.0
+        self._t_start = 0.0
+        self._t_end = 0.0
 
-        self.dt = 0.04
+        self._dt = 0.04
 
-        self.mini_dist = -1000
-        self.maxi_dist = 1000
-        self.mini_speed = -70  # [m/s] ~= -250 km/h
-        self.maxi_speed = 70
-        self.mini_acceleration = -10  # [m/s^2] ~= g
-        self.maxi_acceleration = 10
-        self.mini_time_start = -100  # [s]
-        self.maxi_time_start = 0  # [s]
-        self.mini_time_end = self.dt
-        self.maxi_time_end = 1800
+        self._mini_dist = -1000
+        self._maxi_dist = 1000
+        self._mini_speed = -70  # [m/s] ~= -250 km/h
+        self._maxi_speed = 70
+        self._mini_acceleration = -10  # [m/s^2] ~= g
+        self._maxi_acceleration = 10
+        self._mini_time_start = -100  # [s]
+        self._maxi_time_start = 0  # [s]
+        self._mini_time_end = self._dt
+        self._maxi_time_end = 1800
 
-        self.car1, self.car2 = None, None
-        self.x_min, self.x_max = 0., 0.
-        self.car1_y, self.car2_y = 0.45, 0.55
+        self._car1, self._car2 = None, None
+        self._x_min, self._x_max = 0., 0.
+        self._car1_y, self._car2_y = 0.45, 0.55
 
-        self.ani = None
+        self._ani = None
 
-        self.builder.connect_callbacks(self)
+        self._builder.connect_callbacks(self)
 
     def run(self):
-        self.mainwindow.mainloop()
+        self._mainwindow.mainloop()
 
     def on_start_clicked(self):
-        self.ax.clear()
+        self._ax.clear()
         self._read_values()
-        self.builder.get_variable('err_msg').set(self.err_message)
+        self._builder.get_variable('err_msg').set(self.err_message)
         if not self.is_valid_all:
             return
 
-        self.car1 = Car(self.c1_x0, self.c1_v0, self.c1_a, marker_color='red')
-        self.car2 = Car(self.c2_x0, self.c2_v0, self.c2_a, marker_color='green')
+        self._car1 = Car(self._c1_x0, self._c1_v0, self._c1_a, marker_color='red')
+        self._car2 = Car(self._c2_x0, self._c2_v0, self._c2_a, marker_color='green')
 
-        t_s = np.arange(self.t_start, self.t_end, self.dt)
-        car1_positions = self.car1.position(t_s)
-        car2_positions = self.car2.position(t_s)
-        self.x_min, self.x_max = find_x_range(car1_positions, car2_positions)
+        t_s = np.arange(self._t_start, self._t_end, self._dt)
+        car1_positions = self._car1.position(t_s)
+        car2_positions = self._car2.position(t_s)
+        self._x_min, self._x_max = find_x_range(car1_positions, car2_positions)
 
-        drawing_settings(self.x_min, self.x_max, self.ax, self.fig)
-        draw_road(ax=self.ax)
-        car1_pt, = self.car1.plot_dummy(self.ax)
-        car2_pt, = self.car2.plot_dummy(self.ax)
-        time_template, time_text = get_time_text(self.ax)
-        self.canvas.draw()
+        drawing_settings(self._x_min, self._x_max, self._ax, self._fig)
+        draw_road(ax=self._ax)
+        car1_pt, = self._car1.plot_dummy(self._ax)
+        car2_pt, = self._car2.plot_dummy(self._ax)
+        time_template, time_text = get_time_text(self._ax)
+        self._canvas.draw()
 
         def animate(i):
-            car1_pt.set_data([car1_positions[i]], [self.car1_y])
-            car2_pt.set_data([car2_positions[i]], [self.car2_y])
-            time_text.set_text(time_template.format(i * self.dt))
+            car1_pt.set_data([car1_positions[i]], [self._car1_y])
+            car2_pt.set_data([car2_positions[i]], [self._car2_y])
+            time_text.set_text(time_template.format(i * self._dt))
             return car1_pt, car2_pt,
 
-        self.ani = FuncAnimation(self.fig, animate, frames=len(t_s), interval=self.dt * 1000, repeat=False)
-        self.canvas.draw()
+        self._ani = FuncAnimation(self._fig, animate, frames=len(t_s), interval=self._dt * 1000, repeat=False)
+        self._canvas.draw()
 
     def _read_values(self):
         self.err_message = ''
         self.is_valid_all = True
 
-        self.c1_x0 = self._read_value('car1 x0', 'c1_x0', self.mini_dist, self.maxi_dist)
-        self.c2_x0 = self._read_value('car2 x0', 'c2_x0', self.mini_dist, self.maxi_dist)
-        self.c1_v0 = self._read_value('car1 v0', 'c1_v0', self.mini_speed, self.maxi_speed)
-        self.c2_v0 = self._read_value('car2 v0', 'c2_v0', self.mini_speed, self.maxi_speed)
-        self.c1_a = self._read_value('car1 a', 'c1_a', self.mini_acceleration, self.maxi_acceleration)
-        self.c2_a = self._read_value('car2 a', 'c2_a', self.mini_acceleration, self.maxi_acceleration)
-        self.t_start = self._read_value('time start', 't_start', self.mini_time_start, self.maxi_time_start)
-        self.t_end = self._read_value('time end', 't_end', self.mini_time_end, self.maxi_time_end)
+        self._c1_x0 = self._read_value('car1 x0', 'c1_x0', self._mini_dist, self._maxi_dist)
+        self._c2_x0 = self._read_value('car2 x0', 'c2_x0', self._mini_dist, self._maxi_dist)
+        self._c1_v0 = self._read_value('car1 v0', 'c1_v0', self._mini_speed, self._maxi_speed)
+        self._c2_v0 = self._read_value('car2 v0', 'c2_v0', self._mini_speed, self._maxi_speed)
+        self._c1_a = self._read_value('car1 a', 'c1_a', self._mini_acceleration, self._maxi_acceleration)
+        self._c2_a = self._read_value('car2 a', 'c2_a', self._mini_acceleration, self._maxi_acceleration)
+        self._t_start = self._read_value('time start', 't_start', self._mini_time_start, self._maxi_time_start)
+        self._t_end = self._read_value('time end', 't_end', self._mini_time_end, self._maxi_time_end)
 
     def _read_value(self, field_name, input_name, mini, maxi):
         is_valid, text, res = validate_input(field_name,
-                                             self.builder.get_variable(input_name).get(),
+                                             self._builder.get_variable(input_name).get(),
                                              mini, maxi)
         if not is_valid:
             self.is_valid_all = False
