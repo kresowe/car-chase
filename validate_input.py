@@ -1,6 +1,5 @@
-def validate_input(field_name, inp, mini, maxi):
+def valid_input(inp, mini, maxi):
     is_valid = False
-    text = ''
     try:
         inp = float(inp)
         if mini <= inp <= maxi:
@@ -8,6 +7,5 @@ def validate_input(field_name, inp, mini, maxi):
         else:
             raise ValueError('')
     except ValueError:
-        text += f'{field_name} should be a number between {mini} and {maxi}. \n'
-    return is_valid, text, inp
-
+        pass
+    return is_valid

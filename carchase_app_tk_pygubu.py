@@ -9,7 +9,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.animation import FuncAnimation
 from car import Car
 from drawing import find_x_range, drawing_settings, draw_road, get_time_text
-from validate_input import validate_input
+from validate_input import valid_input
 
 proj_path = pathlib.Path(__file__).parent
 proj_ui = proj_path / "carchase.ui"
@@ -64,8 +64,8 @@ class CarChaseAppTkPyGubu:
     def on_start_clicked(self):
         self._ax.clear()
         self._read_values()
-        self._builder.get_variable('err_msg').set(self.err_message)
-        if not self.is_valid_all:
+        self._builder.get_variable('err_msg').set(self._err_message)
+        if not self._is_valid_all:
             return
 
         self._car1 = Car(self._c1_x0, self._c1_v0, self._c1_a, marker_color='red')
@@ -93,8 +93,8 @@ class CarChaseAppTkPyGubu:
         self._canvas.draw()
 
     def _read_values(self):
-        self.err_message = ''
-        self.is_valid_all = True
+        self._err_message = ''
+        self._is_valid_all = True
 
         self._c1_x0 = self._read_value('car1 x0', 'c1_x0', self._mini_dist, self._maxi_dist)
         self._c2_x0 = self._read_value('car2 x0', 'c2_x0', self._mini_dist, self._maxi_dist)
@@ -106,14 +106,15 @@ class CarChaseAppTkPyGubu:
         self._t_end = self._read_value('time end', 't_end', self._mini_time_end, self._maxi_time_end)
 
     def _read_value(self, field_name, input_name, mini, maxi):
-        is_valid, text, res = validate_input(field_name,
-                                             self._builder.get_variable(input_name).get(),
-                                             mini, maxi)
-        if not is_valid:
-            self.is_valid_all = False
-            self.err_message += text
+        inp = self._builder.get_variable(input_name).get()
 
-        return res
+        if not valid_input(inp, mini, maxi):
+            self._is_valid_all = False
+            self._err_message += f'{field_name} should be a number between {mini} and {maxi}. \n'
+            return inp
+
+        input_value = float(inp)
+        return input_value
 
 
 if __name__ == '__main__':
