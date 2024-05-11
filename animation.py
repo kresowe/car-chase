@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from drawing import drawing_settings, draw_road, find_x_range, get_time_text
 from car import Car
+from typing import Iterable
+from matplotlib import artist
 
 
 if __name__ == '__main__':
@@ -26,7 +28,7 @@ if __name__ == '__main__':
     car2_pt, = car2.plot_dummy(ax)
     time_template, time_text = get_time_text(ax)
 
-    def animate(i):
+    def animate(i: int) -> Iterable[artist.Artist]:
         car1_pt.set_data([car1_positions[i]], [car1_y])
         car2_pt.set_data([car2_positions[i]], [car2_y])
         time_text.set_text(time_template.format(i * dt))

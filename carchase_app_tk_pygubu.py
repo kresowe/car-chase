@@ -1,22 +1,22 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 import pygubu
 import pathlib
 import numpy as np
-import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
+from matplotlib import artist
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.animation import FuncAnimation
 from car import Car
 from drawing import find_x_range, drawing_settings, draw_road, get_time_text
 from validate_input import InputValidator
+from typing import Iterable, Union
 
 proj_path = pathlib.Path(__file__).parent
 proj_ui = proj_path / "carchase.ui"
 
 
 class CarChaseAppTkPyGubu:
-    def __init__(self, master=None):
+    def __init__(self, master=None) -> None:
         self._builder = pygubu.Builder()
         self._builder.add_resource_path(proj_path)
         self._builder.add_from_file(proj_ui)
@@ -58,10 +58,10 @@ class CarChaseAppTkPyGubu:
 
         self._builder.connect_callbacks(self)
 
-    def run(self):
+    def run(self) -> None:
         self._mainwindow.mainloop()
 
-    def on_start_clicked(self):
+    def on_start_clicked(self) -> None:
         self._ax.clear()
         self._read_values()
         self._builder.get_variable('err_msg').set(self._err_message)
@@ -83,7 +83,7 @@ class CarChaseAppTkPyGubu:
         time_template, time_text = get_time_text(self._ax)
         self._canvas.draw()
 
-        def animate(i):
+        def animate(i: int) -> Iterable[artist.Artist]:
             car1_pt.set_data([car1_positions[i]], [self._car1_y])
             car2_pt.set_data([car2_positions[i]], [self._car2_y])
             time_text.set_text(time_template.format(i * self._dt))
@@ -92,7 +92,7 @@ class CarChaseAppTkPyGubu:
         self._ani = FuncAnimation(self._fig, animate, frames=len(t_s), interval=self._dt, repeat=False)
         self._canvas.draw()
 
-    def _read_values(self):
+    def _read_values(self) -> None:
         self._err_message = ''
         self._is_valid_all = True
 
@@ -105,7 +105,7 @@ class CarChaseAppTkPyGubu:
         self._t_start = self._read_value('time start', 't_start', self._mini_time_start, self._maxi_time_start)
         self._t_end = self._read_value('time end', 't_end', self._mini_time_end, self._maxi_time_end)
 
-    def _read_value(self, field_name, input_name, mini, maxi):
+    def _read_value(self, field_name: str, input_name: str, mini: float, maxi: float) -> Union[str, float]:
         inp = self._builder.get_variable(input_name).get()
         input_validator = InputValidator()
 
