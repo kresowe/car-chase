@@ -1,3 +1,8 @@
 .idea/
 
 __pycache__/
+
+.pylintrc
+
+car_chase_with_ui.py
+carchase_app_tk_pygubu_gen.py
