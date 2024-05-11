@@ -9,7 +9,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.animation import FuncAnimation
 from car import Car
 from drawing import find_x_range, drawing_settings, draw_road, get_time_text
-from validate_input import valid_input
+from validate_input import InputValidator
 
 proj_path = pathlib.Path(__file__).parent
 proj_ui = proj_path / "carchase.ui"
@@ -107,8 +107,9 @@ class CarChaseAppTkPyGubu:
 
     def _read_value(self, field_name, input_name, mini, maxi):
         inp = self._builder.get_variable(input_name).get()
+        input_validator = InputValidator()
 
-        if not valid_input(inp, mini, maxi):
+        if not input_validator.is_valid(inp, mini, maxi):
             self._is_valid_all = False
             self._err_message += f'{field_name} should be a number between {mini} and {maxi}. \n'
             return inp
