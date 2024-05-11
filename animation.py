@@ -10,11 +10,11 @@ from matplotlib import artist
 if __name__ == '__main__':
     car1 = Car(x0=0, v0=0, a=1.5, marker_color='red')
     car2 = Car(x0=0, v0=11.11, a=0.8, marker_color='green')
-    t_start = 0.0
-    t_end = 33.0
-    dt = 0.04
+    T_START = 0.0
+    T_END = 33.0
+    DT = 0.04
 
-    t_s = np.arange(t_start, t_end, dt)
+    t_s = np.arange(T_START, T_END, DT)
     car1_positions = car1.position(t_s)
     car2_positions = car2.position(t_s)
     x_min, x_max = find_x_range(car1_positions, car2_positions)
@@ -29,11 +29,12 @@ if __name__ == '__main__':
     time_template, time_text = get_time_text(ax)
 
     def animate(i: int) -> Iterable[artist.Artist]:
+        """Runs animation by updating positions of cars and displayed time"""
         car1_pt.set_data([car1_positions[i]], [car1_y])
         car2_pt.set_data([car2_positions[i]], [car2_y])
-        time_text.set_text(time_template.format(i * dt))
-        return car1_pt, car2_pt,
+        time_text.set_text(time_template.format(i * DT))
+        return car1_pt, car2_pt
 
-    ani = FuncAnimation(fig, animate, frames=len(t_s), interval=dt)
+    ani = FuncAnimation(fig, animate, frames=len(t_s), interval=DT)
 
     plt.show()

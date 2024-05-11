@@ -16,6 +16,7 @@ proj_ui = proj_path / "carchase.ui"
 
 
 class CarChaseAppTkPyGubu:
+    """Class for UI app."""
     def __init__(self, master=None) -> None:
         self._builder = pygubu.Builder()
         self._builder.add_resource_path(proj_path)
@@ -59,9 +60,15 @@ class CarChaseAppTkPyGubu:
         self._builder.connect_callbacks(self)
 
     def run(self) -> None:
+        """Run an app."""
         self._mainwindow.mainloop()
 
     def on_start_clicked(self) -> None:
+        """This method is called when "Start" button is clicked.
+        I.e., the user input is read and validated.
+        If it's valid, an animation starts.
+        Otherwise, the errors are displayed.
+        """
         self._ax.clear()
         self._read_values()
         self._builder.get_variable('err_msg').set(self._err_message)
@@ -84,15 +91,17 @@ class CarChaseAppTkPyGubu:
         self._canvas.draw()
 
         def animate(i: int) -> Iterable[artist.Artist]:
+            """Runs animation by updating positions of cars and displayed time"""
             car1_pt.set_data([car1_positions[i]], [self._car1_y])
             car2_pt.set_data([car2_positions[i]], [self._car2_y])
             time_text.set_text(time_template.format(i * self._dt))
-            return car1_pt, car2_pt,
+            return car1_pt, car2_pt
 
         self._ani = FuncAnimation(self._fig, animate, frames=len(t_s), interval=self._dt, repeat=False)
         self._canvas.draw()
 
     def _read_values(self) -> None:
+        """Reads all values from user input. They are validated."""
         self._err_message = ''
         self._is_valid_all = True
 
@@ -106,6 +115,8 @@ class CarChaseAppTkPyGubu:
         self._t_end = self._read_value('time end', 't_end', self._mini_time_end, self._maxi_time_end)
 
     def _read_value(self, field_name: str, input_name: str, mini: float, maxi: float) -> Union[str, float]:
+        """Reads a value from a field [field_name] from user interface.
+        User input is validated using InputValidator object."""
         inp = self._builder.get_variable(input_name).get()
         input_validator = InputValidator()
 
