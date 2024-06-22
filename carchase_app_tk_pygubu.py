@@ -4,11 +4,12 @@ import pathlib
 import numpy as np
 from matplotlib.figure import Figure
 from matplotlib import artist
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.animation import FuncAnimation
 from car import Car
 from drawing import find_x_range, drawing_settings, draw_road, get_time_text
 from validate_input import InputValidator
+from simulation_settings import *
 from typing import Iterable, Union
 
 proj_path = pathlib.Path(__file__).parent
@@ -39,17 +40,6 @@ class CarChaseAppTkPyGubu:
         self._t_end = 0.0
 
         self._dt = 0.04
-
-        self._mini_dist = -1000
-        self._maxi_dist = 1000
-        self._mini_speed = -70  # [m/s] ~= -250 km/h
-        self._maxi_speed = 70
-        self._mini_acceleration = -10  # [m/s^2] ~= g
-        self._maxi_acceleration = 10
-        self._mini_time_start = -100  # [s]
-        self._maxi_time_start = 0  # [s]
-        self._mini_time_end = self._dt
-        self._maxi_time_end = 1800
 
         self._car1, self._car2 = None, None
         self._x_min, self._x_max = 0., 0.
@@ -105,14 +95,14 @@ class CarChaseAppTkPyGubu:
         self._err_message = ''
         self._is_valid_all = True
 
-        self._c1_x0 = self._read_value('car1 x0', 'c1_x0', self._mini_dist, self._maxi_dist)
-        self._c2_x0 = self._read_value('car2 x0', 'c2_x0', self._mini_dist, self._maxi_dist)
-        self._c1_v0 = self._read_value('car1 v0', 'c1_v0', self._mini_speed, self._maxi_speed)
-        self._c2_v0 = self._read_value('car2 v0', 'c2_v0', self._mini_speed, self._maxi_speed)
-        self._c1_a = self._read_value('car1 a', 'c1_a', self._mini_acceleration, self._maxi_acceleration)
-        self._c2_a = self._read_value('car2 a', 'c2_a', self._mini_acceleration, self._maxi_acceleration)
-        self._t_start = self._read_value('time start', 't_start', self._mini_time_start, self._maxi_time_start)
-        self._t_end = self._read_value('time end', 't_end', self._mini_time_end, self._maxi_time_end)
+        self._c1_x0 = self._read_value('car1 x0', 'c1_x0', MINI_DIST, MAXI_DIST)
+        self._c2_x0 = self._read_value('car2 x0', 'c2_x0', MINI_DIST, MAXI_DIST)
+        self._c1_v0 = self._read_value('car1 v0', 'c1_v0', MINI_SPEED, MAXI_SPEED)
+        self._c2_v0 = self._read_value('car2 v0', 'c2_v0', MINI_SPEED, MAXI_SPEED)
+        self._c1_a = self._read_value('car1 a', 'c1_a', MINI_ACCELERATION, MAXI_ACCELERATION)
+        self._c2_a = self._read_value('car2 a', 'c2_a', MINI_ACCELERATION, MAXI_ACCELERATION)
+        self._t_start = self._read_value('time start', 't_start', MINI_TIME_START, MAXI_TIME_START)
+        self._t_end = self._read_value('time end', 't_end', MINI_TIME_END, MAXI_TIME_END)
 
     def _read_value(self, field_name: str, input_name: str, mini: float, maxi: float) -> Union[str, float]:
         """Reads a value from a field [field_name] from user interface.

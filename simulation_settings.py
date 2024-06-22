@@ -1,0 +1,6 @@
+MINI_DIST, MAXI_DIST = -1000., 1000.   # [m]
+MINI_SPEED, MAXI_SPEED = -70., 70.  # [m/s] ~= -250 km/h
+MINI_ACCELERATION, MAXI_ACCELERATION = -10., 10.  # [m/s^2] ~= g
+MINI_TIME_START, MAXI_TIME_START = -100., 0.   # [s]
+MINI_TIME_END, MAXI_TIME_END = 0.04, 1800.  # [s]
+DT = 0.04  # [s]
