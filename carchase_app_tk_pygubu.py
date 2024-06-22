@@ -4,7 +4,7 @@ import pathlib
 import numpy as np
 from matplotlib.figure import Figure
 from matplotlib import artist
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.animation import FuncAnimation
 from car import Car
 from drawing import find_x_range, drawing_settings, draw_road, get_time_text
